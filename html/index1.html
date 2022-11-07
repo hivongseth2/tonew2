@@ -1,0 +1,656 @@
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Music player</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css"
+    integrity="sha512-HK5fgLBL+xu6dm/Ii3z4xhlSUyZgTT9tuc/hSrtw6uzJOvgRr2a9jyxxT1ely+B+xFAmJKVSTbpM/CuL7qxO8w=="
+    crossorigin="anonymous" />
+<link rel="preconnect" href="https://fonts.gstatic.com">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../css/style.css">
+
+<style>
+    .bgp {
+
+        background-position: 80% 80%;
+        height: 100%;
+        left: 0;
+
+
+    }
+</style>
+
+<body>
+    <div class="cd">
+
+        <div class="cd-thumb" style="background-image: url('https://i.ytimg.com/vi/jTLhQf5KJSc/maxresdefault.jpg')">
+
+        </div>
+
+    </div>
+
+
+    <div class="container">
+
+
+        <div id="slide">
+
+
+            <div class="item" style="background-image: url(../asset/img/img1.jpg);">
+                <div class="content">
+                    <div class="name">T</div>
+                    <div class="des">Tinh ru anh di chay pho, chua kip chay pho thi anhchay mat tieu</div>
+                    <button>See more</button>
+                </div>
+            </div>
+            <div class="item" style="background-image: url(../asset/img/img1.jpg);">
+                <div class="content">
+                    <div class="name">T</div>
+                    <div class="des">Tinh ru anh di chay pho, chua kip chay pho thi anhchay mat tieu</div>
+                    <button>See more</button>
+                </div>
+            </div>
+
+            <div class="item" style="background-image: url(../asset/img/img3.jpg);">
+                <div class="content">
+                    <div class="name">O</div>
+                    <div class="des">Tinh ru anh di chay pho, chua kip chay pho thi anhchay mat tieu</div>
+                    <button>See more</button>
+                </div>
+            </div>
+            <div class="item" style="background-image: url(../asset/img/img4.jpg);">
+                <div class="content">
+                    <div class="name">A</div>
+                    <div class="des">Tinh ru anh di chay pho, chua kip chay pho thi anhchay mat tieu</div>
+                    <button>See more</button>
+                </div>
+            </div>
+            <div class="item" style="background-image: url(../asset/img/img5.jpg);">
+                <div class="content">
+                    <div class="name">N</div>
+                    <div class="des">Tinh ru anh di chay pho, chua kip chay pho thi anhchay mat tieu</div>
+                    <button>See more</button>
+                </div>
+            </div>
+            <div class="item" style="background-image: url(../asset/img/img7.jpg);">
+                <div class="content">
+                    <div class="name">H</div>
+                    <div class="des">Tinh ru anh di chay pho, chua kip chay pho thi anhchay mat tieu</div>
+                    <button>See more</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="buttons">
+            <button id="prev"><i class="fa-solid fa-angle-left"></i></button>
+            <button id="next"><i class="fa-solid fa-angle-right"></i></button>
+        </div>
+
+
+    </div>
+
+    <div class="dashboard">
+        <!-- Header -->
+
+
+        <!-- CD -->
+
+        <header>
+            <h4></h4>
+            <h2></h2>
+        </header>
+
+
+    </div>
+
+    <script>
+
+        document.getElementById('next').onclick = function () {
+            let lists = document.querySelectorAll('.item');
+            document.getElementById('slide').appendChild(lists[0]);
+        }
+        document.getElementById('prev').onclick = function () {
+            let lists = document.querySelectorAll('.item');
+            document.getElementById('slide').prepend(lists[lists.length - 1]);
+        }
+
+
+
+        var xitem = document.querySelectorAll('.item')
+
+
+
+        document.querySelector('#slide').onmouseenter = function () {
+            let i = 0;
+
+            for (i; i < xitem.length; i++) {
+                xitem[i].classList.add('bgp')
+            }
+
+
+        }
+
+
+        document.getElementById('slide').onmouseleave = function () {
+            let i = 0;
+
+            for (i; i < xitem.length; i++) {
+                xitem[i].classList.remove('bgp')
+            }
+        }
+
+    </script>
+
+
+    <div class="player">
+        <!-- Dashboard -->
+
+
+
+
+
+        <!-- Control -->
+
+
+
+
+
+
+        <div class="control">
+            <div class=" btn btn-repeat">
+                <i class="fas fa-redo"></i>
+            </div>
+            <div class="btn btn-prev">
+                <i class="fas fa-step-backward"></i>
+            </div>
+            <div class="btn btn-toggle-play">
+                <i class="fas fa-pause icon-pause"></i>
+                <i class="fas fa-play icon-play"></i>
+            </div>
+            <div class="btn btn-next">
+                <i class="fas fa-step-forward"></i>
+            </div>
+            <div class="btn btn-random">
+                <i class="fas fa-random"></i>
+            </div>
+        </div>
+
+        <input id="progress" class="progress" type="range" value="0" step="0.1" min="0" max="100">
+
+        <audio id="audio" src=""></audio>
+
+        <!-- Playlist -->
+        <div class="playlist">
+
+        </div>
+
+
+
+
+        <script>
+            const theCanvas = document.querySelector('canvas')
+            const ctx = theCanvas.getContext('2d')
+            const objects = []
+            class Circle {
+                constructor() {
+                    this.x = Math.random()
+                    this.y = Math.random() * theCanvas.height + 3
+                    this.size = Math.random() * 3 + 3
+                    this.speedX = Math.random() / 2
+                    this.speedY = Math.random() / 2
+                }
+                create() {
+                    ctx.fillStyle = 'pink'
+                    ctx.beginPath()
+                    ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2)
+                    ctx.fill()
+                }
+                update() {
+                    this.x += this.speedX
+                    if (this.x >= theCanvas.width) {
+                        this.x = 0
+                    }
+                    this.y += this.speedY
+                    if (this.y >= theCanvas.height) {
+                        this.y = 0
+                    }
+                }
+            }
+
+            function addObjects() {
+                for (let i = 0; i < 200; i++) {
+                    objects.push(new Circle())
+                }
+            }
+
+            addObjects()
+
+            function createCircle() {
+                for (let i = 0; i < objects.length; i++) {
+                    objects[i].create()
+                    objects[i].update()
+                }
+            }
+
+            createCircle()
+
+            function clear() {
+                ctx.clearRect(0, 0, theCanvas.width, theCanvas.height)
+                createCircle()
+                requestAnimationFrame(clear)
+            }
+            clear()
+
+        </script>
+        <!-- Design from: https://static.collectui.com/shots/3671744/musicloud-revolutionary-app-for-music-streaming-large -->
+        <script>
+            const PLAYER_STORAGE_KEY = 'PLAYER'
+            const $ = document.querySelector.bind(document);
+            const $$ = document.querySelectorAll.bind(document);
+            const heading = $('header h2');
+            const cdThumb = $('.cd-thumb');
+            const audio = $('#audio')
+            const cd = $('.cd')
+            const playBtn = $('.btn-toggle-play')
+            const player = $('.player')
+            const nextBtn = $('.btn-next')
+            const timecd = $('#progress')
+            const preBtn = $('.btn-prev')
+            const randBtn = $('.btn-random')
+            const repatBtn = $('.btn-repeat')
+            const playlist = $('.playlist')
+            const ht = $('html')
+
+
+            const app =
+            {
+                currentIndex: 0,
+                isPlaying: false,
+
+                songs: [
+                    {
+                        name: 'Paradise Love',
+                        singer: 'Kelly Chan',
+                        path: "../asset/music/song4.mp3",
+                        image: "../asset/img/img4.jpg"
+                    },
+                    {
+                        name: 'Never Say Goodbye',
+                        singer: 'Mario & Nasty',
+                        path: "../asset/music/song1.mp3",
+                        image: "../asset/img/img1.jpg"
+                    },
+                    {
+                        name: 'Take You DanCing',
+                        singer: 'JaSon Derulo',
+                        path: "../asset/music/song2.mp3",
+                        image: "../asset/img/img2.jpg"
+                    },
+                    {
+                        name: 'Man Not Hot',
+                        singer: 'Big Shaq',
+                        path: "../asset/music/song3.mp3",
+                        image: "../asset/img/img3.jpg"
+                    },
+
+                    {
+                        name: 'Ngày lang thang',
+                        singer: 'Đen ft JGkid',
+                        path: "../asset/music/song5.mp3",
+                        image: "../asset/img/img5.jpg"
+                    },
+                    {
+                        name: 'Đó chỉ là thành phố của anh',
+                        singer: 'Lux',
+                        path: "../asset/music/song6.mp3",
+                        image: "../asset/img/img6.jpg"
+                    },
+                    {
+                        name: 'Trời ơi con chưa muốn chết',
+                        singer: 'Đen',
+                        path: "../asset/music/song7.mp3",
+                        image: "../asset/img/img7.jpg"
+                    }
+
+
+                ],
+
+
+                render: function () {
+                    const htmls = this.songs.map((song, index) => {
+                        return `
+                    <div class="song ${index === this.currentIndex ? 'active' : ''}" data-index="${index}">
+                        <div class="thumb" style="background-image: url('${song.image}')">
+                        </div>
+                        <div class="body">
+                            <h3 class="title">${song.name}</h3>
+                            <p class="author">${song.singer}</p>
+                        </div>
+                        <div class="option">
+                            <i class="fas fa-ellipsis-h"></i>
+                        </div>
+                    </div>
+                    `
+                    }
+                    )
+                    playlist.innerHTML = htmls.join('')
+                },
+                handleEvents: function () {
+                    const _this = this;
+                    const cdWidth = cd.offsetWidth
+
+                    // xu li quay img 
+
+                    const cdThumbAnimate = cdThumb.animate(
+                        [{ transform: 'rotate(360deg)' }
+
+                        ],
+                        {
+                            duration: 10000, // thoi gian 1 vong quay
+                            iterations: Infinity // loop vo han
+
+                        }
+
+                    )
+                    cdThumbAnimate.pause()
+                    // Xu li phong to cd
+                    document.onscroll = function () {
+                        const scrollTop = window.scrollY || document.documentElement.scrollTop
+                        const newcdWidth = cdWidth - scrollTop
+
+                        const nw = newcdWidth
+                        cd.style.width = newcdWidth > 0 ? newcdWidth + 'px' : 0 + 'px'
+                        cd.style.opacity = newcdWidth / cdWidth
+
+
+                    }
+
+                    //}  -
+                    // xu li khi play
+                    playBtn.onclick = function () {
+                        if (_this.isPlaying) {
+
+                            audio.pause()
+
+                        }
+                        else {
+                            audio.play()
+                        }
+
+
+                    }
+                    audio.ontimeupdate = function () {
+                        const progress = audio.currentTime / audio.duration * 100
+                        timecd.value = progress
+                    }
+
+                    timecd.onchange = function (e) {
+                        audio.currentTime = audio.duration / 100 * e.target.value
+                    }
+
+                    // xu li next
+                    nextBtn.onclick = function () {
+                        if (randBtn.classList.contains('active')) {
+                            _this.randSong()
+                        }
+                        else {
+                            _this.nextSong()
+                        }
+                        audio.play()
+
+                        _this.render()
+                        if (_this.currentIndex === 0) {
+                            _this.scrollactcenter()
+                        }
+                        else { _this.scrollact() }
+
+
+                    }
+
+                    preBtn.onclick = function () {
+                        if (randBtn.classList.contains('active')) {
+                            _this.randSong()
+                        }
+                        else {
+                            _this.preSong()
+                        }
+
+                        audio.play()
+
+                        _this.render()
+                        if (_this.currentIndex === 0) {
+                            _this.scrollactcenter()
+                        }
+                        else { _this.scrollact() }
+
+
+
+                    }
+                    repatBtn.onclick = function () {
+                        randBtn.classList.remove('active')
+
+                        if (repatBtn.classList.contains('active')) {
+                            repatBtn.classList.remove('active')
+
+
+                        }
+                        else {
+                            repatBtn.classList.add('active')
+
+
+                        }
+
+
+                    }
+                    audio.onended = function () {
+
+                        if (repatBtn.classList.contains('active')) {
+                            audio.play()
+                        }
+                        else if (randBtn.classList.contains('active')) {
+                            _this.randSong()
+                        }
+                        else {
+                            _this.nextSong()
+                        }
+                        audio.play()
+                        _this.render()
+
+
+                        if (_this.currentIndex === 0) {
+                            _this.scrollactcenter()
+                        }
+                        else { _this.scrollact() }
+
+
+
+
+
+                    }
+
+                    randBtn.onclick = function () {
+                        repatBtn.classList.remove('active')
+                        if (randBtn.classList.contains('active')) {
+                            randBtn.classList.remove('active')
+
+
+                        }
+                        else {
+                            randBtn.classList.add('active')
+
+                        }
+                    }
+
+                    playlist.onclick = function (e) {
+                        const node = e.target.closest('.song:not(.active')
+                        if (node || e.target.closest('.option')) {
+                            if (node) {
+                                _this.currentIndex = Number(node.dataset.index)
+                                _this.loadCurrentSong()
+
+                                audio.play()
+                                _this.render()
+
+
+
+                                if (_this.currentIndex === 0) {
+                                    _this.scrollactcenter()
+                                }
+                                else { _this.scrollact() }
+
+                            }
+                        }
+                    }
+
+
+
+
+
+
+
+                    audio.onplay = function () {
+                        _this.isPlaying = true;
+                        player.classList.add('playing')
+                        cdThumbAnimate.play()
+
+                    }
+
+                    audio.onpause = function () {
+                        _this.isPlaying = false;
+
+                        player.classList.remove('playing')
+                        cdThumbAnimate.pause()
+
+                    }
+
+
+                }
+                ,
+
+                defineProperties: function () {
+                    Object.defineProperty(this, 'currentSong', {
+                        get: function () {
+                            return this.songs[this.currentIndex]
+                        }
+                    })
+                },
+                scrollact: function () {
+                    setTimeout(() => {
+                        $('.song.active').scrollIntoView(
+                            {
+                                behavior: 'smooth',
+                                block: 'nearest'
+                            }
+                        )
+                    }
+
+
+                        , 200)
+                }
+                ,
+                scrollactcenter: function () {
+                    setTimeout(() => {
+                        $('.song.active').scrollIntoView(
+                            {
+                                behavior: 'smooth',
+                                block: 'center'
+                            }
+                        )
+                    }
+
+
+                        , 200)
+                }
+                ,
+                nextSong: function () {
+
+                    this.currentIndex++;
+                    if (this.currentIndex >= this.songs.length - 1) {
+                        this.currentIndex = 0;
+                    }
+                    this.loadCurrentSong()
+
+
+                },
+                preSong: function () {
+
+                    this.currentIndex--;
+                    if (this.currentIndex < 0) {
+                        this.currentIndex = 0;
+                    }
+                    this.loadCurrentSong()
+
+                },
+                randSong: function () {
+                    let number
+                    do {
+                        number = Math.floor(Math.random() * this.songs.length)
+                    } while (this.currentIndex == number)
+                    this.currentIndex = number
+                    this.loadCurrentSong()
+                }
+                ,
+                loadCurrentSong: function () {
+
+                    heading.textContent = this.currentSong.name
+                    cdThumb.style.backgroundImage = `url('${this.currentSong.image}')`
+                    audio.src = this.currentSong.path
+
+
+                },
+
+
+
+
+
+
+
+
+
+
+
+
+
+                start: function () {
+                    this.defineProperties()
+                    this.loadCurrentSong();
+                    this.handleEvents()
+                    this.render()
+                    this.changebg()
+
+
+
+                }
+
+            }
+
+
+            app.start()
+
+
+
+
+
+
+        </script>
+
+        <script>
+            setTimeout(() => {
+                const bd = document.querySelector('body');
+                const cv1 = document.querySelector('.bg')
+
+                bd.classList.remove('bg');
+
+
+
+
+
+
+
+
+            }, 3000)
+        </script>
+    </div>
+
+
+
+
+</body>
