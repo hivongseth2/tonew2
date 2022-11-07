@@ -30,13 +30,13 @@
 
 
         button {
-            position: absolute;
-            top: 30%;
-            left: 47%;
-            height: 100px;
+            position: fixed;
+            top: 27%;
+            left: 44.5%;
+            height: 210px;
             border-radius: 50%;
-            text-shadow: 2px;
-            width: 100px;
+            width: 220px;
+            border: none;
             text-align: center;
             background: radial-gradient(circle, rgba(186, 8, 16, 1) 0%, rgba(236, 9, 103, 1) 39%, rgba(255, 0, 80, 0.7301295518207283) 69%);
             font-size: large;
@@ -44,9 +44,9 @@
             font-style: oblique;
             font-weight: bolder;
             color: azure;
-            animation: hb 1.5s both infinite;
+            animation: hb 1.5s reverse infinite;
             box-shadow: rgba(17, 12, 46, 0.15) 0px 48px 100px 0px;
-            opacity: 0.8;
+            opacity: 0.5;
 
         }
 
@@ -293,9 +293,19 @@
             font-weight: bolder;
             color: azure;
         }
+
+        a:hover {
+            color: brown;
+        }
+
+        button:hover {
+            background-color: rgb(231, 19, 19);
+            opacity: 1;
+
+        }
     </style>
 
-    <button> <a href="./html/index1.html">click</a> </button>
+    <button> <a href="./html/index1.html">Nhấn đây</a> </button>
 
 
     <script>
