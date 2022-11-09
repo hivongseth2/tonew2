@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <canvas id="cv"></canvas>
+
+
+
+
+    <script>
+
+
+        const canvas = document.querySelector("canvas")
+        const ctx = canvas.getContext('2d')
+
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+
+        function Particle(x, y, radius, color, velocity, ttl) {
+            this.x = x;
+            this.y = y;
+            this.radius = radius;
+            this.color = color;
+            this.velocity = velocity;
+            this.ttl = 200;
+
+            this.draw = () => {
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.radius, Math.PI * 2, false);
+                ctx.fillStyle = this.color;
+                ctx.fill();
+
+                ctx.closePath();
+
+            }
+
+            this.update = () => {
+                this.draw()
+                this.ttl--;
+                this.x += this.velocity.x
+                this.y += this.velocity.y;
+            }
+
+        }
+
+        const mouse = {
+            x: window.innerWidth / 2,
+            y: window.innerHeight / 2
+        }
+        function render() {
+            setTimeout(render, 100)
+            for (let i = 0; i <= 30; i++) {
+                const radius = Math.PI * 2 / 30;
+                const velocity = {
+                    x: Math.cos(radius * i),
+                    y: Math.sin(radius * i)
+                }
+                particles.push(
+                    new Particle(mouse.x, mouse.y, 3, "blue", velocity)
+                )
+            }
+        }
+        let particles
+        particles = [];
+
+        //const particles = new Particle(100, 100, 40, "red");
+
+        function animate() {
+            requestAnimationFrame(animate);
+
+            // ctx.clearRect(0, 0, canvas.width, canvas.height)
+            ctx.fillStyle = "rgba(0,0,0,0.05)"
+            ctx.fillRect(0, 0, canvas.width, canvas.height)
+
+            //  particles.forEach(item => console.log(item))
+
+
+
+            particles.forEach((item, index) => {
+                if (item.ttl == 0) {
+                    particles.splice(index, 1)
+                }
+                item.update();
+            })
+
+
+        }
+        render()
+        animate();
+
+        window.addEventListener("mousemove", function (event) {
+            mouse.x = event.clientX;
+            mouse.y = event.clientY;
+        })
+
+    </script>
+</body>
+
+</html>
